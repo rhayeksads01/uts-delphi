@@ -1,0 +1,61 @@
+unit dataUmat;
+
+interface
+
+uses
+  Winapi.Windows, Winapi.Messages, System.SysUtils, System.Variants, System.Classes, Vcl.Graphics,
+  Vcl.Controls, Vcl.Forms, Vcl.Dialogs, Data.DB, Vcl.StdCtrls, Vcl.ExtCtrls,
+  Vcl.Grids, Vcl.DBGrids, Data.Win.ADODB;
+
+type
+  TForm1 = class(TForm)
+    Label1: TLabel;
+    Label2: TLabel;
+    Label3: TLabel;
+    Label4: TLabel;
+    Edit1: TEdit;
+    Edit2: TEdit;
+    ComboBox1: TComboBox;
+    Edit3: TEdit;
+    Button1: TButton;
+    Button2: TButton;
+    StringGrid1: TStringGrid;
+    ADOTable1: TADOTable;
+    ADOConnection1: TADOConnection;
+    procedure FormCreate(Sender: TObject);
+  private
+    { Private declarations }
+  public
+    { Public declarations }
+  end;
+
+var
+  Form1: TForm1;
+
+implementation
+
+{$R *.dfm}
+
+procedure TForm1.FormCreate(Sender: TObject);
+begin
+StringGrid1.ColWidths[0] := 40;
+StringGrid1.ColWidths[1] := 100;
+StringGrid1.ColWidths[2] := 90;
+StringGrid1.ColWidths[3] := 90;
+StringGrid1.ColWidths[4] := 100;
+  with ADOTable1 do begin
+    StringGrid1.RowCount := RecordCount + 1;
+
+      while not Eof do begin
+        StringGrid1.Cells[0,RecNo] := FieldByName('ID').AsString;
+        StringGrid1.Cells[1,RecNo] := FieldByName('nama').AsString;
+        StringGrid1.Cells[2,RecNo] := FieldByName('jenis').AsString;
+        StringGrid1.Cells[3,RecNo] := FieldByName('banyak').AsString;
+        StringGrid1.Cells[4,RecNo] := FieldByName('desc').AsString;
+        Next;
+      end;
+
+  end;
+end;
+
+end.
